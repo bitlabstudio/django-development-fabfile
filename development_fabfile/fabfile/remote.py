@@ -7,18 +7,6 @@ from development_fabfile.fabfile.utils import require_server
 
 
 @require_server
-def run_restart_apache():
-    """
-    Restarts apache on the given server.
-
-    Usage::
-
-        fab <server> run_restart_apache
-
-    """
-    run('{0}restart'.format(settings.SERVER_APACHE_BIN_DIR))
-
-
 def run_git_pull():
     """
     Pulls the latest code and updates submodules.
@@ -30,3 +18,16 @@ def run_git_pull():
     """
     with cd(settings.SERVER_REPO_ROOT):
         run('git pull && git submodule init && git submodule update')
+
+
+@require_server
+def run_restart_apache():
+    """
+    Restarts apache on the given server.
+
+    Usage::
+
+        fab <server> run_restart_apache
+
+    """
+    run('{0}restart'.format(settings.SERVER_APACHE_BIN_DIR))
