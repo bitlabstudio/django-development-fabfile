@@ -14,7 +14,7 @@ from fabric.api import env
 
 def common_conf():
     """Sets some default values in the environment."""
-    env.user = 'django'
+    env.user = settings.LOGIN_USER
     env.port = '22'
     env.pg_admin_role = 'postgres'
     env.machine = None
