@@ -51,3 +51,25 @@ def run_restart_apache():
 
     """
     run('{0}restart'.format(settings.SERVER_APACHE_BIN_DIR))
+
+
+@require_server
+def run_rsync_project():
+    """
+    Copies the project from the git repository to it's destination folder.
+
+    This has the nice side effect of rsync deleting all ``.pyc`` files and
+    removing other files that might have been left behind by sys admins messing
+    around on the server.
+
+    Usage::
+
+        fab <server> run_rsync_project
+
+    """
+    excludes = ''
+    for exclude in settings.RSYNC_EXCLUDES:
+        excludes += " --exclude '{0}'".format(exclude)
+    command = "rsync -avz --stats --delete {0} {1} {2}".format(
+        excludes, settings.SERVER_REPO_PROJECT_ROOT, settings.SERVER_APP_ROOT)
+    run(command)
