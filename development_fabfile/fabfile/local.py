@@ -1,6 +1,9 @@
 """Fabfile for tasks that only manipulate things on the local machine."""
 from django.conf import settings
+
 from fabric.api import local
+from fabric.api import settings as fab_settings
+from fabric.colors import green, red
 
 
 def delete_db():
@@ -37,3 +40,30 @@ def rebuild():
     delete_db()
     local('python2.7 manage.py syncdb --all --noinput')
     local('python2.7 manage.py migrate --fake')
+
+
+def test(options=None, integration=1,
+         test_settings='myproject.settings.test_settings'):
+    """
+    Runs manage.py tests.
+
+    Usage::
+
+        fab test
+        fab test:app
+        fab test:app.tests.forms_tests:TestCaseName
+        fab test:integration=0
+
+    """
+    command = ("./manage.py test -v 2 --traceback --failfast" +
+               " --settings={0}".format(test_settings))
+    if int(integration) == 0:
+        command += " --exclude='integration_tests'"
+    if options:
+        command += ' {0}'.format(options)
+    with fab_settings(warn_only=True):
+        result = local(command, capture=False)
+    if result.failed:
+        print red('Some tests failed')
+    else:
+        print green('All tests passed')

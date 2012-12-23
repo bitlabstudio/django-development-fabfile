@@ -7,6 +7,38 @@ from development_fabfile.fabfile.utils import require_server, run_workon
 
 
 @require_server
+def run_collectstatic():
+    """
+    Runs `./manage.py collectstatic` on the given server.
+
+    Usage::
+
+        fab <server> run_collectstatic
+
+    """
+    with cd(settings.SERVER_PROJECT_ROOT):
+        run_workon('python2.7 manage.py collectstatic --noinput')
+
+
+@require_server
+def run_deploy_website():
+    """
+    Executes all tasks necessary to deploy the website on the given server.
+
+    Usage::
+
+        fab <server> run_deploy_website
+
+    """
+    run_git_pull()
+    run_pip_install()
+    run_rsync_project()
+    run_syncdb()
+    run_collectstatic()
+    run_restart_apache()
+
+
+@require_server
 def run_git_pull():
     """
     Pulls the latest code and updates submodules.
@@ -73,3 +105,17 @@ def run_rsync_project():
     command = "rsync -avz --stats --delete {0} {1} {2}".format(
         excludes, settings.SERVER_REPO_PROJECT_ROOT, settings.SERVER_APP_ROOT)
     run(command)
+
+
+@require_server
+def run_syncdb():
+    """
+    Runs `./manage.py syncdb --migrate` on the given server.
+
+    Usage::
+
+        fab <server> run_syncdb
+
+    """
+    with cd(settings.SERVER_PROJECT_ROOT):
+        run_workon('python2.7 manage.py syncdb --migrate --noinput')
