@@ -22,7 +22,7 @@ DB_NAME = PROJECT_NAME
 
 # This should be the superuser of your postgres installation. Usually this is
 # either postgres or your login username.
-LOCAL_PG_ADMIN_ROLE = 'username'
+LOCAL_PG_ADMIN_ROLE = 'postgres'
 
 
 # ============================================================================
@@ -49,7 +49,7 @@ SERVER_REPO_PROJECT_ROOT = '{0}{1}'.format(SERVER_REPO_ROOT, PROJECT_NAME)
 SERVER_APP_ROOT = '/home/{0}/webapps/{0}_django/'.format(PROJECT_NAME)
 SERVER_PROJECT_ROOT = '{0}{1}'.format(SERVER_APP_ROOT, PROJECT_NAME)
 SERVER_REQUIREMENTS_PATH = '{0}requirements.txt'.format(SERVER_PROJECT_ROOT)
-SERVER_MEDIA_ROOT = '/home/{0}/webapps/{0}/'.format(PROJECT_NAME)
+SERVER_MEDIA_ROOT = '/home/{0}/webapps/{0}_media/'.format(PROJECT_NAME)
 SERVER_DB_BACKUP_DIR = '/home/{0}/backups/postgres/'.format(PROJECT_NAME)
 SERVER_MEDIA_BACKUP_DIR = '/home/{0}/backups/media/'.format(PROJECT_NAME)
 SERVER_WSGI_FILE = '{0}{1}/wsgi.py'.format(
