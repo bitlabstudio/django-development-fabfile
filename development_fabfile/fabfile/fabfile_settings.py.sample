@@ -30,7 +30,7 @@ LOCAL_PG_ADMIN_ROLE = 'postgres'
 # ============================================================================
 
 # This should be the name of your user that has sudo access on the server
-LOGIN_USER = PROJECTNAME
+LOGIN_USER = PROJECT_NAME
 HOST_DEV = None
 HOST_STAGE = None
 HOST_PROD = '{0}.webfactional.com'.format(PROJECT_NAME)
