@@ -1,4 +1,6 @@
-=== 0.3 (ongoing)  ===
+=== (ongoing)  ===
+
+=== 0.3  ===
 
 - Added `drop_db` and `create_db` tasks
 
