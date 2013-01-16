@@ -1,5 +1,7 @@
 === 0.3 (ongoing)  ===
 
+- Added `drop_db` and `create_db` tasks
+
 === 0.2 ===
 
 - Added `test` task
