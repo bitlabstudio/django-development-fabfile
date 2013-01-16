@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- Fixed bad DB_NAME in `create_db` task.
+
 === 0.3  ===
 
 - Added `drop_db` and `create_db` tasks

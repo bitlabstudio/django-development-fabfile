@@ -17,7 +17,7 @@ def create_db(with_postgis=False):
 
     """
     local('psql {0} -c "CREATE DATABASE {1}"'.format(
-        USER_AND_HOST, settings.PROJECT_NAME))
+        USER_AND_HOST, settings.DB_NAME))
     if with_postgis:
         local('psql {0} {1} -c "CREATE EXTENSION postgis"'.format(
             USER_AND_HOST, settings.DB_NAME))
