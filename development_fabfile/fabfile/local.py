@@ -95,6 +95,7 @@ def import_db(filename=None):
         local('pg_restore -O -c -U {0} -d {1} {2}'.format(
             settings.DB_ROLE, settings.DB_NAME, filename))
 
+
 def lessc():
     """
     Compiles all less files.
@@ -108,7 +109,7 @@ def lessc():
           ' {0}/static/css/bootstrap.css'.format(settings.PROJECT_NAME))
     local('lessc {0}/static/css/responsive.less'
           ' {0}/static/css/bootstrap-responsive.css'.format(
-            settings.PROJECT_NAME))
+              settings.PROJECT_NAME))
 
 
 def rebuild():
