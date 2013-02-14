@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 0.4  ===
+
  - Added fab tasks to import / export / upload / download postgres databases
 
 === 0.3.1  ===
