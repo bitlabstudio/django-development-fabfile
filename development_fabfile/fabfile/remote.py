@@ -1,7 +1,7 @@
 """Fab tasks that execute things on a remote server."""
 from django.conf import settings
 
-from fabric.api import cd, run
+from fabric.api import cd, env, local, run
 
 from development_fabfile.fabfile.utils import require_server, run_workon
 
@@ -36,6 +36,42 @@ def run_deploy_website():
     run_syncdb()
     run_collectstatic()
     run_restart_apache()
+
+
+@require_server
+def run_download_db(filename=None):
+    """
+    Downloads the database from the server into your local machine.
+
+    In order to import the downloaded database, run ``fab import_db``
+
+    Usage::
+
+        fab prod run_download_db
+        fab prod run_download_db:filename=foobar.dump
+
+    """
+    if not filename:
+        filename = settings.DB_DUMP_FILENAME
+    local('scp {0}@{1}:{2}{3} .'.format(
+        env.user, env.host_string, settings.SERVER_DB_BACKUP_DIR, filename))
+
+
+@require_server
+def run_export_db(filename=None):
+    """
+    Exports the database on the server.
+
+    Usage::
+
+        fab prod run_export_db
+        fab prod run_export_db:filename=foobar.dump
+
+    """
+    if not filename:
+        filename = settings.DB_DUMP_FILENAME
+    run('pg_dump -c -Fc -O -U {0} -f {1}{2}'.format(
+        settings.DB_ROLE, settings.SERVER_DB_BACKUP_DIR, filename))
 
 
 @require_server
@@ -119,3 +155,26 @@ def run_syncdb():
     """
     with cd(settings.SERVER_PROJECT_ROOT):
         run_workon('python2.7 manage.py syncdb --migrate --noinput')
+
+
+@require_server
+def run_upload_db(filename=None):
+    """
+    Uploads your local database to the server.
+
+    You can create a local dump with ``fab export_db`` first.
+
+    In order to import the database on the server you still need to SSH into
+    the server.
+
+    Usage::
+
+        fab prod run_upload_db
+        fab prod run_upload_db:filename=foobar.dump
+
+    """
+    if not filename:
+        filename = settings.DB_DUMP_FILENAME
+    local('scp {0} {1}@{2}:{3}'.format(
+        filename, settings.LOGIN_USER, env.host_string,
+        settings.SERVER_DB_BACKUP_DIR))

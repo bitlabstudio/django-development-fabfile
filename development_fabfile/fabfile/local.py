@@ -39,6 +39,28 @@ def delete_db():
     local(' ./manage.py reset_db --router=default --noinput')
 
 
+def export_db(filename=None):
+    """
+    Exports the database.
+
+    Make sure that you have this in your ``~/.pgpass`` file:
+
+    localhost:5433:*:<db_role>:<password>
+
+    Also make sure that the file has ``chmod 0600 .pgpass``.
+
+    Usage::
+
+        fab export_db
+        fab export_db:filename=foobar.dump
+
+    """
+    if not filename:
+        filename = settings.DB_DUMP_FILENAME
+    local('pg_dump -c -Fc -O -U {0} -f {1}'.format(
+        settings.DB_ROLE, filename))
+
+
 def drop_db():
     """Drops the local database."""
     with fab_settings(warn_only=True):
@@ -50,6 +72,28 @@ def flake8():
     """Runs flake8 against the codebase."""
     return local('flake8 --ignore=E126 --statistics .')
 
+
+def import_db(filename=None):
+    """
+    Imports the database.
+
+    Make sure that you have this in your ``~/.pgpass`` file:
+
+    localhost:5433:*:publishizer_publishizer:publishizer
+
+    Also make sure that the file has ``chmod 0600 .pgpass``.
+
+    Usage::
+
+        fab import_db
+        fab import_db:filename=foobar.dump
+
+    """
+    if not filename:
+        filename = settings.DB_DUMP_FILENAME
+    with fab_settings(warn_only=True):
+        local('pg_restore -O -c -U {0} -d {1} {2}'.format(
+            settings.DB_ROLE, settings.DB_NAME, filename))
 
 def lessc():
     """

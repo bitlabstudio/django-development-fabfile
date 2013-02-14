@@ -14,6 +14,7 @@ VENV_NAME = PROJECT_NAME
 # your servers
 DB_ROLE = PROJECT_NAME
 DB_NAME = PROJECT_NAME
+DB_DUMP_FILENAME = '{0}.dump'.format(PROJECT_NAME)
 
 
 # ============================================================================
@@ -57,7 +58,8 @@ SERVER_REQUIREMENTS_PATH = '{0}/requirements.txt'.format(
 
 SERVER_MEDIA_ROOT = '/home/{0}/webapps/{1}_media/'.format(
     LOGIN_USER, PROJECT_NAME)
-SERVER_DB_BACKUP_DIR = '/home/{0}/backups/postgres/'.format(LOGIN_USER)
+SERVER_DB_BACKUP_DIR = '/home/{0}/backups/{1}/postgres/'.format(LOGIN_USER,
+    PROJECT_NAME)
 SERVER_MEDIA_BACKUP_DIR = '/home/{0}/backups/media/'.format(LOGIN_USER)
 SERVER_WSGI_FILE = '{0}{1}/wsgi.py'.format(
     SERVER_PROJECT_ROOT, PROJECT_NAME)
