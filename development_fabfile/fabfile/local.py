@@ -4,6 +4,7 @@ from django.conf import settings
 from fabric.api import local
 from fabric.api import settings as fab_settings
 from fabric.colors import green, red
+from fabric.utils import abort
 
 
 USER_AND_HOST = '-U {0} -h localhost'.format(settings.LOCAL_PG_ADMIN_ROLE)
@@ -145,6 +146,6 @@ def test(options=None, integration=1,
     with fab_settings(warn_only=True):
         result = local(command, capture=False)
     if result.failed:
-        print red('Some tests failed')
+        abort(red('Some tests failed'))
     else:
         print green('All tests passed')
