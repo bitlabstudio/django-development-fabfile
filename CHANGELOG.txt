@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 0.5 ===
+
 - Added check_coverage and check tasks.
 
 === 0.4  ===
