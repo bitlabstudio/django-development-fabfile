@@ -1,13 +1,39 @@
 """Fabfile for tasks that only manipulate things on the local machine."""
+import re
+
 from django.conf import settings
 
-from fabric.api import local
+from fabric.api import lcd, local
 from fabric.api import settings as fab_settings
 from fabric.colors import green, red
 from fabric.utils import abort
 
 
 USER_AND_HOST = '-U {0} -h localhost'.format(settings.LOCAL_PG_ADMIN_ROLE)
+
+
+def check():
+    """Runs flake8, check_coverage and test."""
+    flake8()
+    test()
+    check_coverage()
+
+
+def check_coverage():
+    """Checks if the coverage is 100%."""
+    with lcd(settings.LOCAL_COVERAGE_PATH):
+        total_line = local('grep -n Total index.html', capture=True)
+        match = re.search(r'^(\d+):', total_line)
+        total_line_number = int(match.groups()[0])
+        percentage_line_number = total_line_number + 4
+        percentage_line = local(
+            'awk NR=={0} index.html'.format(percentage_line_number),
+            capture=True)
+        match = re.search(r'<td>(\d.+)%</td>', percentage_line)
+        percentage = float(match.groups()[0])
+    if percentage < 100:
+        abort(red('Coverage is {0}%'.format(percentage)))
+    print(green('Coverage is {0}%'.format(percentage)))
 
 
 def create_db(with_postgis=False):

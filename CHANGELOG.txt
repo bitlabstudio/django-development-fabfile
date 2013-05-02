@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- Added check_coverage and check tasks.
+
 === 0.4  ===
 
  - Added fab tasks to import / export / upload / download postgres databases
