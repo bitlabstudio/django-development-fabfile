@@ -8,6 +8,9 @@ import os
 # This should be the folder name of your Django project
 PROJECT_NAME = 'projectname'
 
+# Path to your test_settings.py
+TEST_SETTINGS_PATH = 'myproject.settings.test_settings'
+
 # This should be the name of the virtualenv on your local machine and on your
 # servers
 VENV_NAME = PROJECT_NAME

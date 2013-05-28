@@ -1,5 +1,9 @@
 === (ongoing)  ===
 
+- Added TEST_SETTINGS_PATH setting to fabfile_settings.py
+  This allows you to use our fab test task even if your settings have a
+  different path than `myproject.settings.test_settings`
+
 === 0.5 ===
 
 - Added check_coverage and check tasks.

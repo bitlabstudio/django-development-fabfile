@@ -151,7 +151,7 @@ def rebuild():
 
 
 def test(options=None, integration=1,
-         test_settings='myproject.settings.test_settings'):
+         test_settings=None):
     """
     Runs manage.py tests.
 
@@ -163,6 +163,8 @@ def test(options=None, integration=1,
         fab test:integration=0
 
     """
+    if test_settings is None:
+        test_settings = settings.TEST_SETTINGS_PATH
     command = ("./manage.py test -v 2 --traceback --failfast" +
                " --settings={0}".format(test_settings))
     if int(integration) == 0:
