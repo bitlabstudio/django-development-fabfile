@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 0.6.1 ===
+
 - Added creation of DB role to create_db task.
 
 === 0.6 ===
