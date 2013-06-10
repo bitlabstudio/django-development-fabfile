@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- Added creation of DB role to create_db task.
+
 === 0.6 ===
 
 - Added TEST_SETTINGS_PATH setting to fabfile_settings.py

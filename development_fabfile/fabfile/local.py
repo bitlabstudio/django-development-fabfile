@@ -43,6 +43,8 @@ def create_db(with_postgis=False):
     :param with_postgis: If ``True``, the postgis extension will be installed.
 
     """
+    local('psql {0} -c "CREATE USER {1} WITH PASSWORD \'{1}\'"'.format(
+        USER_AND_HOST, settings.DB_ROLE))
     local('psql {0} -c "CREATE DATABASE {1}"'.format(
         USER_AND_HOST, settings.DB_NAME))
     if with_postgis:
