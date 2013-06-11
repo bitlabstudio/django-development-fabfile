@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 0.6.2 ===
+
 - drop_db task also drops the database role now
 
 === 0.6.1 ===
