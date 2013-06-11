@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- drop_db task also drops the database role now
+
 === 0.6.1 ===
 
 - Added creation of DB role to create_db task.

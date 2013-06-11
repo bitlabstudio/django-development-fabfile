@@ -95,6 +95,8 @@ def drop_db():
     with fab_settings(warn_only=True):
         local('psql {0} -c "DROP DATABASE {1}"'.format(
             USER_AND_HOST, settings.DB_NAME))
+        local('psql {0} -c "DROP USER {1}"'.format(
+            USER_AND_HOST, settings.DB_ROLE))
 
 
 def flake8():
