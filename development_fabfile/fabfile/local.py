@@ -154,6 +154,11 @@ def rebuild():
     local('python2.7 manage.py migrate --fake')
 
 
+def reset_passwords():
+    """Resets all passwords to `test123`."""
+    local('python2.7 manage.py set_fake_passwords --password=test123')
+
+
 def test(options=None, integration=1,
          test_settings=None):
     """

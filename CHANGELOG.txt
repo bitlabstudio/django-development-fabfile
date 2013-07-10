@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- Added local reset_passwords tasks.
+
 === 0.6.2 ===
 
 - drop_db task also drops the database role now
