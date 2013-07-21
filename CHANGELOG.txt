@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 0.8  ===
+
 - Added run_export_media task
 - Added run_download_media task
 - Added import_media task
