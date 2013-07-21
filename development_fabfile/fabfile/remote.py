@@ -58,6 +58,26 @@ def run_download_db(filename=None):
 
 
 @require_server
+def run_download_media(filename=None):
+    """
+    Downloads the media dump from the server into your local machine.
+
+    In order to import the downloaded media dump, run ``fab import_media``
+
+    Usage::
+
+        fab prod run_download_media
+        fab prod run_download_media:filename=foobar.tar.gz
+
+    """
+    if not filename:
+        filename = settings.MEDIA_DUMP_FILENAME
+
+    local('scp {0}@{1}:{2}{3} .'.format(
+        env.user, env.host_string, settings.SERVER_MEDIA_BACKUP_DIR, filename))
+
+
+@require_server
 def run_export_db(filename=None):
     """
     Exports the database on the server.
@@ -72,6 +92,26 @@ def run_export_db(filename=None):
         filename = settings.DB_DUMP_FILENAME
     run('pg_dump -c -Fc -O -U {0} -f {1}{2}'.format(
         settings.DB_ROLE, settings.SERVER_DB_BACKUP_DIR, filename))
+
+
+@require_server
+def run_export_media(filename=None):
+    """
+    Exports the media folder on the server.
+
+    Usage::
+
+        fab prod run_export_media
+        fab prod run_export_media:filename=foobar.tar.gz
+
+    """
+    if not filename:
+        filename = settings.MEDIA_DUMP_FILENAME
+
+    with cd(settings.SERVER_MEDIA_ROOT):
+        run('rm -rf {0}'.format(filename))
+        run('tar -czf {0} *'.format(filename))
+        run('mv {0} {1}'.format(filename, settings.SERVER_MEDIA_BACKUP_DIR))
 
 
 @require_server

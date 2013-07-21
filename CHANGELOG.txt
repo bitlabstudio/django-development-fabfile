@@ -1,5 +1,12 @@
 === (ongoing)  ===
 
+- Added run_export_media task
+- Added run_download_media task
+- Added import_media task
+- Added new setting MEDIA_DUMP_FILENAME to fabfile_settings.py.sample
+- Fixed path of SERVER_MEDIA_BACKUP_DIR in fabfile_settings.py.sample
+- Please update your fabfile_settings.py with those two fixes!
+
 === 0.7  ===
 
 - Added local reset_passwords tasks.

@@ -1,9 +1,10 @@
 """Fabfile for tasks that only manipulate things on the local machine."""
+import os
 import re
 
 from django.conf import settings
 
-from fabric.api import lcd, local
+from fabric.api import hide, lcd, local
 from fabric.api import settings as fab_settings
 from fabric.colors import green, red
 from fabric.utils import abort
@@ -125,6 +126,41 @@ def import_db(filename=None):
     with fab_settings(warn_only=True):
         local('pg_restore -O -c -U {0} -d {1} {2}'.format(
             settings.DB_ROLE, settings.DB_NAME, filename))
+
+
+def import_media(filename=None):
+    """
+    Extracts media dump into your local media root.
+
+    Please note that this might overwrite existing local files.
+
+    Usage::
+
+        fab import_media
+        fab import_media:filename=foobar.tar.gz
+
+    """
+    if not filename:
+        filename = settings.MEDIA_DUMP_FILENAME
+
+    project_root = os.getcwd()
+
+    with fab_settings(hide('everything'), warn_only=True):
+        is_backup_missing = local('test -e "$(echo %s)"' % os.path.join(
+            project_root, filename)).failed
+    if is_backup_missing:
+        abort(red('ERROR: There is no media backup that could be imported in'
+                  ' {0}. We need a file called {1} in that folder.'.format(
+                      project_root, filename)))
+
+    # copy the dump into the media root folder
+    with lcd(project_root):
+        local('cp {0} {1}'.format(filename, settings.MEDIA_ROOT))
+
+    # extract and remove media dump
+    with lcd(settings.MEDIA_ROOT):
+        local('tar -xvf {0}'.format(filename))
+        local('rm -rf {0}'.format(filename))
 
 
 def lessc():
