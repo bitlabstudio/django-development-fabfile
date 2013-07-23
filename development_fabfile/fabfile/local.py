@@ -195,8 +195,7 @@ def reset_passwords():
     local('python2.7 manage.py set_fake_passwords --password=test123')
 
 
-def test(options=None, integration=1,
-         test_settings=None):
+def test(options=None, integration=1, selenium=1, test_settings=None):
     """
     Runs manage.py tests.
 
@@ -206,6 +205,7 @@ def test(options=None, integration=1,
         fab test:app
         fab test:app.tests.forms_tests:TestCaseName
         fab test:integration=0
+        fab test:selenium=0
 
     """
     if test_settings is None:
@@ -214,6 +214,8 @@ def test(options=None, integration=1,
                " --settings={0}".format(test_settings))
     if int(integration) == 0:
         command += " --exclude='integration_tests'"
+    if int(selenium) == 0:
+        command += " --exclude='selenium_tests'"
     if options:
         command += ' {0}'.format(options)
     with fab_settings(warn_only=True):

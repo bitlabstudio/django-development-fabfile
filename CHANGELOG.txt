@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- Added selenium kwarg to fab test task to isolate selenium tests if you want
+
 === 0.8  ===
 
 - Added run_export_media task
