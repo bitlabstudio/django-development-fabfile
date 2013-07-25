@@ -21,7 +21,7 @@ def run_collectstatic():
 
 
 @require_server
-def run_deploy_website():
+def run_deploy_website(restart_apache=False):
     """
     Executes all tasks necessary to deploy the website on the given server.
 
@@ -35,7 +35,10 @@ def run_deploy_website():
     run_rsync_project()
     run_syncdb()
     run_collectstatic()
-    run_touch_wsgi()
+    if restart_apache:
+        run_restart_apache()
+    else:
+        run_touch_wsgi()
 
 
 @require_server
