@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 0.9  ===
+
 - No longer restarting apache on run_deploy_website, touching wsgi file instead
 
 === 0.8.1  ===
