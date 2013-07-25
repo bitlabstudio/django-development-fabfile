@@ -35,7 +35,7 @@ def run_deploy_website():
     run_rsync_project()
     run_syncdb()
     run_collectstatic()
-    run_restart_apache()
+    run_touch_wsgi()
 
 
 @require_server
@@ -195,6 +195,19 @@ def run_syncdb():
     """
     with cd(settings.SERVER_PROJECT_ROOT):
         run_workon('python2.7 manage.py syncdb --migrate --noinput')
+
+
+@require_server
+def run_touch_wsgi():
+    """
+    Runs `touch <path>/wsgi.py` on the given server.
+
+    Usage::
+
+        fab <server> run_touch_wsgi
+
+    """
+    run('touch {0}'.format(settings.SERVER_WSGI_FILE))
 
 
 @require_server
