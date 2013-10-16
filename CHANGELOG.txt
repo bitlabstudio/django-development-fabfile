@@ -1,5 +1,11 @@
 === (ongoing)  ===
 
+- Added run_makemessages and run_compilemessages commands
+- Added MAKEMESSAGES_ON_DEPLOYMENT and COMPILEMESSAGES_ON_DEPLOYMENT settings,
+  please update your fabfile_settings.py
+- run_deploy_website now executes makemessages and compilemessages, if the
+  settings are set to True
+
 === 0.9  ===
 
 - No longer restarting apache on run_deploy_website, touching wsgi file instead

@@ -21,6 +21,21 @@ def run_collectstatic():
 
 
 @require_server
+def run_compilemessages():
+    """
+    Executes ./manage.py compilemessages on the server.
+
+    Usage::
+
+        fab <server name> run_compilemessages
+
+    """
+
+    with cd(settings.SERVER_PROJECT_ROOT):
+        run_workon('python2.7 manage.py compilemessages')
+
+
+@require_server
 def run_deploy_website(restart_apache=False):
     """
     Executes all tasks necessary to deploy the website on the given server.
@@ -35,6 +50,10 @@ def run_deploy_website(restart_apache=False):
     run_rsync_project()
     run_syncdb()
     run_collectstatic()
+    if getattr(settings, 'MAKEMESSAGES_ON_DEPLOYMENT', False):
+        run_makemessages()
+    if getattr(settings, 'COMPILEMESSAGES_ON_DEPLOYMENT', False):
+        run_compilemessages()
     if restart_apache:
         run_restart_apache()
     else:
@@ -129,6 +148,20 @@ def run_git_pull():
     """
     with cd(settings.SERVER_REPO_ROOT):
         run('git pull && git submodule init && git submodule update')
+
+
+@require_server
+def run_makemessages():
+    """
+    Executes ./manage.py makemessages -s --all on the server.
+
+    Usage::
+
+        fab <server name> run_makemessages
+
+    """
+    with cd(settings.SERVER_PROJECT_ROOT):
+        run_workon('python2.7 manage.py makemessages -s --all')
 
 
 @require_server

@@ -22,6 +22,12 @@ DB_NAME = PROJECT_NAME
 DB_DUMP_FILENAME = '{0}.dump'.format(PROJECT_NAME)
 MEDIA_DUMP_FILENAME = '{0}_media.tar.gz'.format(PROJECT_NAME)
 
+# Set this to true if you want to execute makemessages during a deployment
+MAKEMESSAGES_ON_DEPLOYMENT = False
+
+# Set this to true if you want to execute compilemessages during a deployment
+COMPILEMESSAGES_ON_DEPLOYMENT = False
+
 
 # ============================================================================
 # Local settings
