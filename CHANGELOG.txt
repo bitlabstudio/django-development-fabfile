@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 1.0  ===
+
 - Added run_makemessages and run_compilemessages commands
 - Added MAKEMESSAGES_ON_DEPLOYMENT and COMPILEMESSAGES_ON_DEPLOYMENT settings,
   please update your fabfile_settings.py
