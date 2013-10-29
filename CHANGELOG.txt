@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 2.0 ===
+
 - Turned environemnt specific settings into function and added lambda function
   to fabfile_settings.py.sample
 - This finally allows to deploy to different servers (we had never tried that
