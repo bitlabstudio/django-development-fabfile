@@ -16,7 +16,7 @@ def run_collectstatic():
         fab <server> run_collectstatic
 
     """
-    with cd(settings.SERVER_PROJECT_ROOT):
+    with cd(settings.FAB_SETTING('SERVER_PROJECT_ROOT')):
         run_workon('python2.7 manage.py collectstatic --noinput')
 
 
@@ -31,7 +31,7 @@ def run_compilemessages():
 
     """
 
-    with cd(settings.SERVER_PROJECT_ROOT):
+    with cd(settings.FAB_SETTING('SERVER_PROJECT_ROOT')):
         run_workon('python2.7 manage.py compilemessages')
 
 
@@ -76,7 +76,8 @@ def run_download_db(filename=None):
     if not filename:
         filename = settings.DB_DUMP_FILENAME
     local('scp {0}@{1}:{2}{3} .'.format(
-        env.user, env.host_string, settings.SERVER_DB_BACKUP_DIR, filename))
+        env.user, env.host_string,
+        settings.FAB_SETTING('SERVER_DB_BACKUP_DIR'), filename))
 
 
 @require_server
@@ -96,7 +97,8 @@ def run_download_media(filename=None):
         filename = settings.MEDIA_DUMP_FILENAME
 
     local('scp {0}@{1}:{2}{3} .'.format(
-        env.user, env.host_string, settings.SERVER_MEDIA_BACKUP_DIR, filename))
+        env.user, env.host_string,
+        settings.FAB_SETTING('SERVER_MEDIA_BACKUP_DIR'), filename))
 
 
 @require_server
@@ -113,7 +115,8 @@ def run_export_db(filename=None):
     if not filename:
         filename = settings.DB_DUMP_FILENAME
     run('pg_dump -c -Fc -O -U {0} -f {1}{2}'.format(
-        settings.DB_ROLE, settings.SERVER_DB_BACKUP_DIR, filename))
+        settings.DB_ROLE, settings.FAB_SETTING('SERVER_DB_BACKUP_DIR'),
+        filename))
 
 
 @require_server
@@ -133,7 +136,8 @@ def run_export_media(filename=None):
     with cd(settings.SERVER_MEDIA_ROOT):
         run('rm -rf {0}'.format(filename))
         run('tar -czf {0} *'.format(filename))
-        run('mv {0} {1}'.format(filename, settings.SERVER_MEDIA_BACKUP_DIR))
+        run('mv {0} {1}'.format(
+            filename, settings.FAB_SETTING('SERVER_MEDIA_BACKUP_DIR')))
 
 
 @require_server
@@ -146,7 +150,7 @@ def run_git_pull():
         fab <server> run_git_pull
 
     """
-    with cd(settings.SERVER_REPO_ROOT):
+    with cd(settings.FAB_SETTING('SERVER_REPO_ROOT')):
         run('git pull && git submodule init && git submodule update')
 
 
@@ -160,7 +164,7 @@ def run_makemessages():
         fab <server name> run_makemessages
 
     """
-    with cd(settings.SERVER_PROJECT_ROOT):
+    with cd(settings.FAB_SETTING('SERVER_PROJECT_ROOT')):
         run_workon('python2.7 manage.py makemessages -s --all')
 
 
@@ -178,7 +182,8 @@ def run_pip_install(upgrade=0):
       ``--upgrade`` flag.
 
     """
-    command = 'pip install -r {0}'.format(settings.SERVER_REQUIREMENTS_PATH)
+    command = 'pip install -r {0}'.format(
+        settings.FAB_SETTING('SERVER_REQUIREMENTS_PATH'))
     if upgrade:
         command += ' --upgrade'
     run_workon(command)
@@ -194,7 +199,7 @@ def run_restart_apache():
         fab <server> run_restart_apache
 
     """
-    run('{0}restart'.format(settings.SERVER_APACHE_BIN_DIR))
+    run('{0}restart'.format(settings.FAB_SETTING('SERVER_APACHE_BIN_DIR')))
 
 
 @require_server
@@ -215,7 +220,8 @@ def run_rsync_project():
     for exclude in settings.RSYNC_EXCLUDES:
         excludes += " --exclude '{0}'".format(exclude)
     command = "rsync -avz --stats --delete {0} {1} {2}".format(
-        excludes, settings.SERVER_REPO_PROJECT_ROOT, settings.SERVER_APP_ROOT)
+        excludes, settings.FAB_SETTING('SERVER_REPO_PROJECT_ROOT'),
+        settings.FAB_SETTING('SERVER_APP_ROOT'))
     run(command)
 
 
@@ -229,7 +235,7 @@ def run_syncdb():
         fab <server> run_syncdb
 
     """
-    with cd(settings.SERVER_PROJECT_ROOT):
+    with cd(settings.FAB_SETTING('SERVER_PROJECT_ROOT')):
         run_workon('python2.7 manage.py syncdb --migrate --noinput')
 
 
@@ -243,7 +249,7 @@ def run_touch_wsgi():
         fab <server> run_touch_wsgi
 
     """
-    run('touch {0}'.format(settings.SERVER_WSGI_FILE))
+    run('touch {0}'.format(settings.FAB_SETTING('SERVER_WSGI_FILE')))
 
 
 @require_server
@@ -266,4 +272,4 @@ def run_upload_db(filename=None):
         filename = settings.DB_DUMP_FILENAME
     local('scp {0} {1}@{2}:{3}'.format(
         filename, settings.LOGIN_USER, env.host_string,
-        settings.SERVER_DB_BACKUP_DIR))
+        settings.FAB_SETTING('SERVER_DB_BACKUP_DIR')))

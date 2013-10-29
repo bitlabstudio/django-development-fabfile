@@ -1,5 +1,12 @@
 === (ongoing)  ===
 
+- Turned environemnt specific settings into function and added lambda function
+  to fabfile_settings.py.sample
+- This finally allows to deploy to different servers (we had never tried that
+  before and the old way didn't work, because many of the settings need to
+  know the LOGIN_USER and that user will be different on different machines
+  on Webfaction)
+
 === 1.0  ===
 
 - Added run_makemessages and run_compilemessages commands

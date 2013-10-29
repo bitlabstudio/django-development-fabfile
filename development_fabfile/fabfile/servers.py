@@ -14,16 +14,9 @@ from fabric.api import env
 
 def common_conf():
     """Sets some default values in the environment."""
-    env.user = settings.LOGIN_USER
     env.port = '22'
     env.pg_admin_role = 'postgres'
-    env.machine = None
     env.venv_name = settings.VENV_NAME
-    env.repo_root = settings.SERVER_REPO_ROOT
-    env.project_root = settings.SERVER_PROJECT_ROOT
-    env.db_backup_dir = settings.SERVER_DB_BACKUP_DIR
-    env.media_backup_dir = settings.SERVER_MEDIA_BACKUP_DIR
-    env.media_root = settings.SERVER_MEDIA_ROOT
 common_conf()
 
 
@@ -41,6 +34,7 @@ def local_machine():
 def dev():
     """Option to do something on the development server."""
     common_conf()
+    env.user = settings.LOGIN_USER_DEV
     env.machine = 'dev'
     env.host_string = settings.HOST_DEV
     env.hosts = [env.host_string, ]
@@ -49,6 +43,7 @@ def dev():
 def stage():
     """Option to do something on the staging server."""
     common_conf()
+    env.user = settings.LOGIN_USER_STAGE
     env.machine = 'stage'
     env.host_string = settings.HOST_STAGE
     env.hosts = [env.host_string, ]
@@ -57,6 +52,7 @@ def stage():
 def prod():
     """Option to do something on the production server."""
     common_conf()
+    env.user = settings.LOGIN_USER_PROD
     env.machine = 'prod'
     env.host_string = settings.HOST_PROD
     env.hosts = [env.host_string, ]
