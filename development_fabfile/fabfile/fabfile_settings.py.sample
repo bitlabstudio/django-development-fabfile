@@ -50,7 +50,7 @@ LOGIN_USER_STAGE = '{0}2'.format(PROJECT_NAME)
 LOGIN_USER_PROD = PROJECT_NAME
 HOST_DEV = None
 HOST_STAGE = None
-HOST_PROD = '{0}.webfactional.com'.format(LOGIN_USER)
+HOST_PROD = '{0}.webfactional.com'.format(LOGIN_USER_PROD)
 
 RSYNC_EXCLUDES = [
     'local_settings.py',
