@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- Fixed bug in remote.py
+
 === 2.0 ===
 
 - Turned environemnt specific settings into function and added lambda function

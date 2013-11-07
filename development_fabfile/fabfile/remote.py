@@ -271,5 +271,5 @@ def run_upload_db(filename=None):
     if not filename:
         filename = settings.DB_DUMP_FILENAME
     local('scp {0} {1}@{2}:{3}'.format(
-        filename, settings.LOGIN_USER, env.host_string,
+        filename, env.user, env.host_string,
         settings.FAB_SETTING('SERVER_DB_BACKUP_DIR')))
