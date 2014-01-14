@@ -10,7 +10,9 @@ from fabric.colors import green, red
 from fabric.utils import abort
 
 
-USER_AND_HOST = '-U {0} -h localhost'.format(settings.LOCAL_PG_ADMIN_ROLE)
+USER_AND_HOST = '-U {0}'.format(settings.LOCAL_PG_ADMIN_ROLE)
+if getattr(settings, 'LOCAL_PG_USE_LOCALHOST', True):
+    USER_AND_HOST += ' -h localhost'
 
 
 def check():

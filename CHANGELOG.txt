@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- Added new LOCAL_PG_USE_LOCALHOST setting
+
 === 2.1 ===
 
 - Fixed bug in remote.py
