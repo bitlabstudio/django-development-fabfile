@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 2.3 ===
+
 - Added bash shell to run_workon command
 - Using DB_PASSWORD from local_settings
 
