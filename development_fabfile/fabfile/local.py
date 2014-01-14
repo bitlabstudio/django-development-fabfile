@@ -14,6 +14,8 @@ USER_AND_HOST = '-U {0}'.format(settings.LOCAL_PG_ADMIN_ROLE)
 if getattr(settings, 'LOCAL_PG_USE_LOCALHOST', True):
     USER_AND_HOST += ' -h localhost'
 
+DB_PASSWORD = settings.DATABASES['default']['PASSWORD']
+
 
 def check():
     """Runs flake8, check_coverage and test."""
@@ -47,7 +49,7 @@ def create_db(with_postgis=False):
 
     """
     local('psql {0} -c "CREATE USER {1} WITH PASSWORD \'{1}\'"'.format(
-        USER_AND_HOST, settings.DB_ROLE))
+        USER_AND_HOST, DB_PASSWORD))
     local('psql {0} -c "CREATE DATABASE {1}"'.format(
         USER_AND_HOST, settings.DB_NAME))
     if with_postgis:

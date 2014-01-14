@@ -1,5 +1,8 @@
 === (ongoing)  ===
 
+- Added bash shell to run_workon command
+- Using DB_PASSWORD from local_settings
+
 === 2.2  ===
 
 - Added new LOCAL_PG_USE_LOCALHOST setting

@@ -33,4 +33,5 @@ def run_workon(command):
     :param command: A string representing a shell command that should be
       executed.
     """
+    env.shell = "/bin/bash -l -i -c"
     return run('workon {0} && {1}'.format(env.venv_name, command))
