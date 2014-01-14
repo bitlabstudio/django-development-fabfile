@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 2.4  ===
+
 - Fixed create_db task
 
 === 2.3 ===
