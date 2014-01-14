@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- Fixed create_db task
+
 === 2.3 ===
 
 - Added bash shell to run_workon command
