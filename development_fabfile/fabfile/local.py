@@ -49,7 +49,7 @@ def create_db(with_postgis=False):
 
     """
     local('psql {0} -c "CREATE USER {1} WITH PASSWORD \'{2}\'"'.format(
-        USER_AND_HOST, settings.DB_USER, DB_PASSWORD))
+        USER_AND_HOST, settings.DB_ROLE, DB_PASSWORD))
     local('psql {0} -c "CREATE DATABASE {1}"'.format(
         USER_AND_HOST, settings.DB_NAME))
     if with_postgis:
