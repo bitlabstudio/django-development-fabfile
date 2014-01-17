@@ -3,7 +3,8 @@ from django.conf import settings
 
 from fabric.api import cd, env, local, run
 
-from development_fabfile.fabfile.utils import require_server, run_workon
+from .local import drop_db, create_db, import_db, reset_passwords
+from .utils import require_server, run_workon
 
 
 @require_server
@@ -152,6 +153,20 @@ def run_git_pull():
     """
     with cd(settings.FAB_SETTING('SERVER_REPO_ROOT')):
         run('git pull && git submodule init && git submodule update')
+
+
+@require_server
+def import_remote_db():
+    """
+    Downloads the prod db and imports it locally.
+
+    """
+    run_export_db()
+    run_download_db()
+    drop_db()
+    create_db()
+    import_db()
+    reset_passwords()
 
 
 @require_server

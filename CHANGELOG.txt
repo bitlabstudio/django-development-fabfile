@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- Added import_remote_db task
+
 === 2.5 ===
 
 - Fixed create_db task again
