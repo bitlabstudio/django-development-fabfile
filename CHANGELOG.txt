@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 2.6  ===
+
 - Added import_remote_db task
 
 === 2.5 ===
