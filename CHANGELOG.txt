@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 2.7  ===
+
 - Added ENCODING UTF8 to create_db task
 
 === 2.6  ===
