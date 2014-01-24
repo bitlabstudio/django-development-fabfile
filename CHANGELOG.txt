@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- Added ENCODING UTF8 to create_db task
+
 === 2.6  ===
 
 - Added import_remote_db task
