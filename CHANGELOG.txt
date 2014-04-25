@@ -1,5 +1,9 @@
 === (ongoing)  ===
 
+- Added --exclude=submodules/ to fab flake8 task
+  This makes sure that flake8 errors in git submodules are not reported (we
+  can't do anything against those)
+
 === 2.7  ===
 
 - Added ENCODING UTF8 to create_db task

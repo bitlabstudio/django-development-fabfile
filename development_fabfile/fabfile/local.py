@@ -106,7 +106,7 @@ def drop_db():
 
 def flake8():
     """Runs flake8 against the codebase."""
-    return local('flake8 --ignore=E126 --statistics .')
+    return local('flake8 --ignore=E126 --statistics --exclude=submodules/ .')
 
 
 def import_db(filename=None):
