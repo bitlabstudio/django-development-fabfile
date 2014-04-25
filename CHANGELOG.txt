@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 2.7.1  ===
+
 - Added --exclude=submodules/ to fab flake8 task
   This makes sure that flake8 errors in git submodules are not reported (we
   can't do anything against those)
