@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- Fixed run_export_media task
+
 === 2.7.1  ===
 
 - Added --exclude=submodules/ to fab flake8 task

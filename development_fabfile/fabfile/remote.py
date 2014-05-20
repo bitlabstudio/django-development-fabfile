@@ -134,7 +134,7 @@ def run_export_media(filename=None):
     if not filename:
         filename = settings.MEDIA_DUMP_FILENAME
 
-    with cd(settings.SERVER_MEDIA_ROOT):
+    with cd(settings.FAB_SETTING('SERVER_MEDIA_ROOT')):
         run('rm -rf {0}'.format(filename))
         run('tar -czf {0} *'.format(filename))
         run('mv {0} {1}'.format(
