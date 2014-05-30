@@ -1,5 +1,9 @@
 === (ongoing)  ===
 
+=== 2.7.3 ===
+
+- flake8 ignores south migrations
+
 === 2.7.2  ===
 
 - Fixed run_export_media task
