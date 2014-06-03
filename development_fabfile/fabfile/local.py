@@ -107,7 +107,8 @@ def drop_db():
 def flake8():
     """Runs flake8 against the codebase."""
     return local('flake8 --ignore=E126 --statistics '
-                 '--exclude=submodules,migrations .')
+                 '--exclude=submodules,migrations '
+                 '--snippets="import ipdb,ipdb.set_trace()" .')
 
 
 def import_db(filename=None):
