@@ -20,6 +20,7 @@ DB_PASSWORD = settings.DATABASES['default']['PASSWORD']
 def check():
     """Runs flake8, check_coverage and test."""
     flake8()
+    syntax_check()
     test()
     check_coverage()
 
@@ -102,6 +103,25 @@ def drop_db():
             USER_AND_HOST, settings.DB_NAME))
         local('psql {0} -c "DROP USER {1}"'.format(
             USER_AND_HOST, settings.DB_ROLE))
+
+
+def syntax_check():
+    """Runs flake8 against the codebase."""
+    with fab_settings(warn_only=True):
+        for file_type in settings.SYNTAX_CHECK:
+            output = local(
+                'find -name "{}" -print'.format(file_type),
+                capture=True,
+            )
+            files = output.split()
+            for file in files:
+                if any(s in file for s in settings.SYNTAX_CHECK_EXCLUDES):
+                    continue
+                result = local('egrep -i -n "{}" {}'.format(
+                    settings.SYNTAX_CHECK[file_type], file), capture=True)
+                if result:
+                    abort(red("Syntax check found in '{}': {}".format(
+                        file, result)))
 
 
 def flake8():

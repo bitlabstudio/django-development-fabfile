@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- added syntax check to search for code snippets
+
 === 2.7.4 ===
 
 - flake8 searches for breakpoints
