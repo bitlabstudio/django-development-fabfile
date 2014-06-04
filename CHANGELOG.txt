@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+=== 2.8 ===
+
 - added syntax check to search for code snippets
 
 === 2.7.4 ===
