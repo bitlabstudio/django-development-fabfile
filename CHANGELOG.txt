@@ -1,5 +1,7 @@
 === (ongoing)  ===
 
+- Made responsive less optional
+
 === 2.9 ===
 
 - Added db_role parameter to run_export_db task

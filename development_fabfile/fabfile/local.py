@@ -189,20 +189,19 @@ def import_media(filename=None):
         local('rm -rf {0}'.format(filename))
 
 
-def lessc():
+def lessc(responsive=False):
     """
     Compiles all less files.
 
     This is useful if you are using the Twitter Bootstrap Framework.
 
-    TODO: Write a blog post about this.
-
     """
     local('lessc {0}/static/css/bootstrap.less'
           ' {0}/static/css/bootstrap.css'.format(settings.PROJECT_NAME))
-    local('lessc {0}/static/css/responsive.less'
-          ' {0}/static/css/bootstrap-responsive.css'.format(
-              settings.PROJECT_NAME))
+    if responsive:
+        local('lessc {0}/static/css/responsive.less'
+              ' {0}/static/css/bootstrap-responsive.css'.format(
+                  settings.PROJECT_NAME))
 
 
 def rebuild():
