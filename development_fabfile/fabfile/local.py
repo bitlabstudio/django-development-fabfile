@@ -4,10 +4,12 @@ import re
 
 from django.conf import settings
 
-from fabric.api import hide, lcd, local
+from fabric.api import env, hide, lcd, local
 from fabric.api import settings as fab_settings
 from fabric.colors import green, red
 from fabric.utils import abort
+
+from .servers import local_machine
 
 
 USER_AND_HOST = '-U {0}'.format(settings.LOCAL_PG_ADMIN_ROLE)
@@ -49,18 +51,19 @@ def create_db(with_postgis=False):
     :param with_postgis: If ``True``, the postgis extension will be installed.
 
     """
+    local_machine()
     local('psql {0} -c "CREATE USER {1} WITH PASSWORD \'{2}\'"'.format(
-        USER_AND_HOST, settings.DB_ROLE, DB_PASSWORD))
+        USER_AND_HOST, env.db_role, DB_PASSWORD))
     local('psql {0} -c "CREATE DATABASE {1} ENCODING \'UTF8\'"'.format(
-        USER_AND_HOST, settings.DB_NAME))
+        USER_AND_HOST, env.db_name))
     if with_postgis:
         local('psql {0} {1} -c "CREATE EXTENSION postgis"'.format(
-            USER_AND_HOST, settings.DB_NAME))
+            USER_AND_HOST, env.db_name))
     local('psql {0} -c "GRANT ALL PRIVILEGES ON DATABASE {1}'
-          ' to {1}"'.format(USER_AND_HOST, settings.DB_ROLE))
+          ' to {1}"'.format(USER_AND_HOST, env.db_role))
     local('psql {0} {1} -c "GRANT ALL PRIVILEGES ON ALL TABLES'
           ' IN SCHEMA public TO {2}"'.format(
-              USER_AND_HOST, settings.DB_NAME, settings.DB_ROLE))
+              USER_AND_HOST, env.db_name, env.db_role))
 
 
 def delete_db():
@@ -90,19 +93,21 @@ def export_db(filename=None):
         fab export_db:filename=foobar.dump
 
     """
+    local_machine()
     if not filename:
         filename = settings.DB_DUMP_FILENAME
     local('pg_dump -c -Fc -O -U {0} -f {1}'.format(
-        settings.DB_ROLE, filename))
+        env.db_role, filename))
 
 
 def drop_db():
     """Drops the local database."""
+    local_machine()
     with fab_settings(warn_only=True):
         local('psql {0} -c "DROP DATABASE {1}"'.format(
-            USER_AND_HOST, settings.DB_NAME))
+            USER_AND_HOST, env.db_name))
         local('psql {0} -c "DROP USER {1}"'.format(
-            USER_AND_HOST, settings.DB_ROLE))
+            USER_AND_HOST, env.db_role))
 
 
 def syntax_check():
@@ -147,11 +152,12 @@ def import_db(filename=None):
         fab import_db:filename=foobar.dump
 
     """
+    local_machine()
     if not filename:
         filename = settings.DB_DUMP_FILENAME
     with fab_settings(warn_only=True):
         local('pg_restore -O -c -U {0} -d {1} {2}'.format(
-            settings.DB_ROLE, settings.DB_NAME, filename))
+            env.db_role, env.db_name, filename))
 
 
 def import_media(filename=None):

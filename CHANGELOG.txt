@@ -1,4 +1,6 @@
-=== (ongoing)  ===
+=== ongoing  ===
+
+- Added possibility for individual DB_ROLE and DB_NAME settings for each environment
 
 === 2.9.1 ===
 

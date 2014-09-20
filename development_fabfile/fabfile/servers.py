@@ -27,8 +27,13 @@ def local_machine():
     env.pg_admin_role = settings.LOCAL_PG_ADMIN_ROLE
     env.db_backup_dir = settings.DJANGO_PROJECT_ROOT
     env.media_backup_dir = settings.DJANGO_PROJECT_ROOT
-    env.media_root = settings.DJANGO_MEDIA_ROOT
-    env.local_db_password = settings.DJANGO_DB_PASSWORD
+
+    # Not sure what this is good for. Not used in our fabfile.
+    # env.media_root = settings.DJANGO_MEDIA_ROOT
+    #env.local_db_password = settings.DJANGO_DB_PASSWORD
+
+    env.db_role = getattr(settings, 'DB_ROLE_LOCAL', settings.DB_ROLE)
+    env.db_name = getattr(settings, 'DB_NAME_LOCAL', settings.DB_NAME)
 
 
 def dev():
@@ -38,6 +43,8 @@ def dev():
     env.machine = 'dev'
     env.host_string = settings.HOST_DEV
     env.hosts = [env.host_string, ]
+    env.db_role = getattr(settings, 'DB_ROLE_DEV', settings.DB_ROLE)
+    env.db_name = getattr(settings, 'DB_NAME_DEV', settings.DB_NAME)
 
 
 def stage():
@@ -47,6 +54,8 @@ def stage():
     env.machine = 'stage'
     env.host_string = settings.HOST_STAGE
     env.hosts = [env.host_string, ]
+    env.db_role = getattr(settings, 'DB_ROLE_STAGE', settings.DB_ROLE)
+    env.db_name = getattr(settings, 'DB_NAME_STAGE', settings.DB_NAME)
 
 
 def prod():
@@ -56,3 +65,5 @@ def prod():
     env.machine = 'prod'
     env.host_string = settings.HOST_PROD
     env.hosts = [env.host_string, ]
+    env.db_role = getattr(settings, 'DB_ROLE_PROD', settings.DB_ROLE)
+    env.db_name = getattr(settings, 'DB_NAME_PROD', settings.DB_NAME)

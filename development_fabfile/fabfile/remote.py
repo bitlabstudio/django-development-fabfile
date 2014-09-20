@@ -54,7 +54,7 @@ def run_deploy_website(restart_apache=False):
     if getattr(settings, 'MAKEMESSAGES_ON_DEPLOYMENT', False):
         run_makemessages()
     if getattr(settings, 'COMPILEMESSAGES_ON_DEPLOYMENT', False):
-        run_compilemessages()
+        run_compilemessag()
     if restart_apache:
         run_restart_apache()
     else:
@@ -117,7 +117,7 @@ def run_export_db(filename=None, db_role=None):
     if not filename:
         filename = settings.DB_DUMP_FILENAME
     if not db_role:
-        db_role = settings.DB_ROLE
+        db_role = env.db_role
     run('pg_dump -c -Fc -O -U {0} -f {1}{2}'.format(
         db_role, settings.FAB_SETTING('SERVER_DB_BACKUP_DIR'),
         filename))
