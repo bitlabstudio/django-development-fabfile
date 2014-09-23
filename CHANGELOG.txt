@@ -1,4 +1,6 @@
-=== ongoing  ===
+=== ongoing (2.10.X)  ===
+
+=== 2.10 ===
 
 - Added possibility for individual DB_ROLE and DB_NAME settings for each environment
 
