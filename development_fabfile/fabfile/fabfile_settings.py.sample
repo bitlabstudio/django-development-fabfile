@@ -115,5 +115,8 @@ def get_fab_setting(setting_name):
         return '{0}{1}/wsgi.py'.format(
             get_fab_setting('SERVER_PROJECT_ROOT'), PROJECT_NAME)
 
+    if setting_name == 'SERVER_LOCAL_ETC_DIR':
+        return '/home/{0}/local/etc/'.format(env.user)
+
 
 FAB_SETTING = lambda x: get_fab_setting(x)

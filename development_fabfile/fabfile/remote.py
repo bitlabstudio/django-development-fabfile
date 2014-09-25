@@ -37,7 +37,8 @@ def run_compilemessages():
 
 
 @require_server
-def run_deploy_website(restart_apache=False):
+def run_deploy_website(restart_apache=False, restart_uwsgi=False,
+                       restart_nginx=False):
     """
     Executes all tasks necessary to deploy the website on the given server.
 
@@ -54,9 +55,13 @@ def run_deploy_website(restart_apache=False):
     if getattr(settings, 'MAKEMESSAGES_ON_DEPLOYMENT', False):
         run_makemessages()
     if getattr(settings, 'COMPILEMESSAGES_ON_DEPLOYMENT', False):
-        run_compilemessag()
+        run_compilemessages()
     if restart_apache:
         run_restart_apache()
+    if restart_uwsgi:
+        run_restart_uwsgi()
+    if restart_nginx:
+        run_restart_nginx()
     else:
         run_touch_wsgi()
 
@@ -218,6 +223,36 @@ def run_restart_apache():
 
     """
     run('{0}restart'.format(settings.FAB_SETTING('SERVER_APACHE_BIN_DIR')))
+
+
+@require_server
+def run_restart_uwsgi():
+    """
+    Restarts uwsgi on the given server.
+
+    Usage::
+
+        fab <server> run_restart_uwsgi
+
+    """
+
+    with cd(settings.FAB_SETTING('SERVER_LOCAL_ETC_DIR')):
+        run('supervisorctl restart uwsgi')
+
+
+@require_server
+def run_restart_nginx():
+    """
+    Restarts uwsgi on the given server.
+
+    Usage::
+
+        fab <server> run_restart_nginx
+
+    """
+
+    with cd(settings.FAB_SETTING('SERVER_LOCAL_ETC_DIR')):
+        run('supervisorctl restart nginx')
 
 
 @require_server
