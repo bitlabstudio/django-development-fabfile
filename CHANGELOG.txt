@@ -1,4 +1,8 @@
-=== ongoing (2.10.X)  ===
+=== ongoing (2.11.X)  ===
+
+=== ongoing (2.11)  ===
+
+- added run_restart_uwsgi and run_restart_nginx tasks
 
 === 2.10 ===
 
