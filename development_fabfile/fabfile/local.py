@@ -61,9 +61,9 @@ def create_db(with_postgis=False):
             USER_AND_HOST, env.db_name))
     local('psql {0} -c "GRANT ALL PRIVILEGES ON DATABASE {1}'
           ' to {1}"'.format(USER_AND_HOST, env.db_role))
-    local('psql {0} {1} -c "GRANT ALL PRIVILEGES ON ALL TABLES'
-          ' IN SCHEMA public TO {2}"'.format(
-              USER_AND_HOST, env.db_name, env.db_role))
+    local('psql {0} -c "GRANT ALL PRIVILEGES ON ALL TABLES'
+          ' IN SCHEMA public TO {1}"'.format(
+              USER_AND_HOST, env.db_role))
 
 
 def delete_db():

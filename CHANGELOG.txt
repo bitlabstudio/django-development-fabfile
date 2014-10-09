@@ -1,5 +1,7 @@
 === ongoing (2.11.X)  ===
 
+- Removed database name from create_db task
+
 === ongoing (2.11)  ===
 
 - added run_restart_uwsgi and run_restart_nginx tasks
