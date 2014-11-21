@@ -1,8 +1,9 @@
 === ongoing (2.11.X)  ===
 
+- Added jshint command and added it to fab check
 - Removed database name from create_db task
 
-=== ongoing (2.11)  ===
+=== 2.11 ===
 
 - added run_restart_uwsgi and run_restart_nginx tasks
 

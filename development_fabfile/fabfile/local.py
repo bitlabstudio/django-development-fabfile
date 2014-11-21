@@ -7,7 +7,8 @@ from django.conf import settings
 from fabric.api import env, hide, lcd, local
 from fabric.api import settings as fab_settings
 from fabric.colors import green, red
-from fabric.utils import abort
+from fabric.utils import abort, warn, puts
+from fabric.state import env
 
 from .servers import local_machine
 
@@ -23,6 +24,7 @@ def check():
     """Runs flake8, check_coverage and test."""
     flake8()
     syntax_check()
+    jshint()
     test()
     check_coverage()
 
@@ -110,10 +112,58 @@ def drop_db():
             USER_AND_HOST, env.db_role))
 
 
+def jshint():
+    """Runs jshint checks."""
+    with fab_settings(warn_only=True):
+        needs_to_abort = False
+        # because jshint fails with exit code 2, we need to allow this as
+        # a successful exit code in our env
+        if 2 not in env.ok_ret_codes:
+            env.ok_ret_codes.append(2)
+        output = local(
+            'find -name "{}" -print'.format('*.js'),
+            capture=True,
+        )
+        files = output.split()
+        jshint_installed = local('command -v jshint', capture=True)
+        if not jshint_installed.succeeded:
+            warn(red(
+                "To enable an extended check of your js files, please"
+                " install jshint by entering:\n\n    npm install -g jshint"
+            ))
+        else:
+            for file in files:
+                if hasattr(settings, 'JSHINT_CHECK_EXCLUDES'):
+                    excludes = settings.JSHINT_CHECK_EXCLUDES
+                else:
+                    excludes = settings.SYNTAX_CHECK_EXCLUDES
+                if any(s in file for s in excludes):
+                    continue
+                jshint_result = local(
+                    'jshint {0}'.format(file),
+                    capture=True
+                )
+                if jshint_result:
+                    warn(red('JS errors detected in file {0}'.format(
+                        file
+                    )))
+                    puts(jshint_result)
+                    needs_to_abort = True
+        if needs_to_abort:
+            abort(red('There have been errors. Please fix them and run'
+                      ' the check again.'))
+        else:
+            puts(green('jshint found no errors. Very good!'))
+
 def syntax_check():
     """Runs flake8 against the codebase."""
     with fab_settings(warn_only=True):
         for file_type in settings.SYNTAX_CHECK:
+            needs_to_abort = False
+            # because egrep fails with exit code 1, we need to allow this as
+            # a successful exit code in our env
+            if 1 not in env.ok_ret_codes:
+                env.ok_ret_codes.append(1)
             output = local(
                 'find -name "{}" -print'.format(file_type),
                 capture=True,
@@ -122,17 +172,23 @@ def syntax_check():
             for file in files:
                 if any(s in file for s in settings.SYNTAX_CHECK_EXCLUDES):
                     continue
-                result = local('egrep -i -n "{}" {}'.format(
+                result = local('egrep -i -n "{0}" {1}'.format(
                     settings.SYNTAX_CHECK[file_type], file), capture=True)
                 if result:
-                    abort(red("Syntax check found in '{}': {}".format(
+                    warn(red("Syntax check found in '{0}': {1}".format(
                         file, result)))
+                    needs_to_abort = True
+            if needs_to_abort:
+                abort(red('There have been errors. Please fix them and run'
+                          ' the check again.'))
+            else:
+                puts(green('Syntax check found no errors. Very good!'))
 
 
 def flake8():
     """Runs flake8 against the codebase."""
     return local('flake8 --ignore=E126 --statistics '
-                 '--exclude=submodules,migrations '
+                 '--exclude=submodules,migrations,node_modules '
                  '--snippets="import ipdb,ipdb.set_trace()" .')
 
 

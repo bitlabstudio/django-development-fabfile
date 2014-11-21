@@ -43,7 +43,10 @@ SYNTAX_CHECK = {
 SYNTAX_CHECK_EXCLUDES = [
     './submodules',
     'static/js/libs/',
+    'node_modules',
 ]
+
+JSHINT_CHECK_EXCLUDES = SYNTAX_CHECK_EXCLUDES
 
 
 # ============================================================================
