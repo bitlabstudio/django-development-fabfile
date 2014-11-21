@@ -1,4 +1,7 @@
-=== ongoing (2.11.X)  ===
+=== ongoing (2.12.X)  ===
+
+
+=== 2.12  ===
 
 - Added jshint command and added it to fab check
 - Removed database name from create_db task
