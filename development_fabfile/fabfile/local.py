@@ -17,6 +17,11 @@ USER_AND_HOST = '-U {0}'.format(settings.LOCAL_PG_ADMIN_ROLE)
 if getattr(settings, 'LOCAL_PG_USE_LOCALHOST', True):
     USER_AND_HOST += ' -h localhost'
 
+HOST = ''
+if getattr(settings, 'LOCAL_PG_USE_LOCALHOST', True):
+    HOST = '-h localhost'
+
+
 DB_PASSWORD = settings.DATABASES['default']['PASSWORD']
 
 
@@ -98,8 +103,8 @@ def export_db(filename=None):
     local_machine()
     if not filename:
         filename = settings.DB_DUMP_FILENAME
-    local('pg_dump -c -Fc -O -U {0} -f {1}'.format(
-        env.db_role, filename))
+    local('pg_dump -c -Fc -O -U {0}{1} -f {2}'.format(
+        env.db_role, HOST, filename))
 
 
 def drop_db():
@@ -212,8 +217,8 @@ def import_db(filename=None):
     if not filename:
         filename = settings.DB_DUMP_FILENAME
     with fab_settings(warn_only=True):
-        local('pg_restore -O -c -U {0} -d {1} {2}'.format(
-            env.db_role, env.db_name, filename))
+        local('pg_restore -O -c -U {0}{1} -d {2} {3}'.format(
+            env.db_role, HOST, env.db_name, filename))
 
 
 def import_media(filename=None):
