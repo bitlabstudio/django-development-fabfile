@@ -1,5 +1,6 @@
-=== ongoing (2.12.X)  ===
+=== ongoing (2.13.X)  ===
 
+- Added HOST (-h localhost) for export_db and import_db tasks
 
 === 2.12  ===
 
