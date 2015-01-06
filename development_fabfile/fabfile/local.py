@@ -19,7 +19,7 @@ if getattr(settings, 'LOCAL_PG_USE_LOCALHOST', True):
 
 HOST = ''
 if getattr(settings, 'LOCAL_PG_USE_LOCALHOST', True):
-    HOST = '-h localhost'
+    HOST = ' -h localhost'
 
 
 DB_PASSWORD = settings.DATABASES['default']['PASSWORD']
