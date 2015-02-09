@@ -18,12 +18,24 @@ your ``manage.py`` file resides)::
     -- __init__.py
     -- your_own_fab_tasks.py
 
-In your ``fabfile/__init__.py`` put the following code::
+If you are on Django < 1.6, put the following code in your
+``fabfile/__init__.py``::
 
     # flake8: noqa
     from myproject import settings
     from django.core.management import setup_environ
     setup_environ(settings)
+
+    from development_fabfile.fabfile import *
+    from .your_own_fab_tasks import *
+
+If you are on Django >=1.6, put the following code in your
+``fabfile/__init__.py``::
+
+    import os
+
+    os.environ.setdefault(
+        "DJANGO_SETTINGS_MODULE", "myproject.settings")
 
     from development_fabfile.fabfile import *
     from .your_own_fab_tasks import *
