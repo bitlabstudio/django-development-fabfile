@@ -1,5 +1,6 @@
 === ongoing (2.13.X)  ===
 
+- Refactored db export
 - Added HOST (-h localhost) for export_db and import_db tasks
 
 === 2.12  ===

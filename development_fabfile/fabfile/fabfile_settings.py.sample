@@ -17,14 +17,6 @@ TEST_SETTINGS_PATH = 'myproject.settings.test_settings'
 # servers
 VENV_NAME = PROJECT_NAME
 
-# You should keep db role and db name identical on your local machine and on
-# your servers
-DB_ROLE = PROJECT_NAME
-DB_NAME = PROJECT_NAME
-
-# If your servers have different role and db names, you can define them here:
-# DB_ROLE_LOCAL, DB_ROLE_DEV, DB_ROLE_STAGE, DB_ROLE_PROD (same with DB_NAME)
-
 DB_DUMP_FILENAME = '{0}.dump'.format(PROJECT_NAME)
 MEDIA_DUMP_FILENAME = '{0}_media.tar.gz'.format(PROJECT_NAME)
 

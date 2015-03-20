@@ -4,7 +4,7 @@ import re
 
 from django.conf import settings
 
-from fabric.api import env, hide, lcd, local
+from fabric.api import hide, lcd, local
 from fabric.api import settings as fab_settings
 from fabric.colors import green, red
 from fabric.utils import abort, warn, puts
@@ -84,7 +84,7 @@ def delete_db():
     local(' ./manage.py reset_db --router=default --noinput')
 
 
-def export_db(filename=None):
+def export_db(filename=None, remote=False):
     """
     Exports the database.
 
@@ -103,8 +103,13 @@ def export_db(filename=None):
     local_machine()
     if not filename:
         filename = settings.DB_DUMP_FILENAME
-    local('pg_dump -c -Fc -O -U {0}{1} -f {2}'.format(
-        env.db_role, HOST, filename))
+    if remote:
+        backup_dir = settings.FAB_SETTING('SERVER_DB_BACKUP_DIR')
+    else:
+        backup_dir = ''
+
+    local('pg_dump -c -Fc -O -U {0}{1} {2} -f {3}{4}'.format(
+        env.db_role, HOST, env.db_name, backup_dir, filename))
 
 
 def drop_db():
@@ -159,6 +164,7 @@ def jshint():
                       ' the check again.'))
         else:
             puts(green('jshint found no errors. Very good!'))
+
 
 def syntax_check():
     """Runs flake8 against the codebase."""
