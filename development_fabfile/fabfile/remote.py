@@ -108,7 +108,7 @@ def run_download_media(filename=None):
 
 
 @require_server
-def run_export_db(filename=None, db_role=None):
+def run_export_db(filename=None, db_role=None, db_name=False):
     """
     Exports the database on the server.
 
@@ -123,8 +123,10 @@ def run_export_db(filename=None, db_role=None):
         filename = settings.DB_DUMP_FILENAME
     if not db_role:
         db_role = env.db_role
-    run('pg_dump -c -Fc -O -U {0} -f {1}{2}'.format(
-        db_role, settings.FAB_SETTING('SERVER_DB_BACKUP_DIR'),
+    if not db_name:
+        db_name = env.db_name
+    run('pg_dump -c -Fc -O -U {0} {1} -f {2}{3}'.format(
+        db_role, db_name, settings.FAB_SETTING('SERVER_DB_BACKUP_DIR'),
         filename))
 
 
