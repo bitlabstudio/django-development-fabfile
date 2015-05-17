@@ -1,4 +1,6 @@
 """Fab tasks that execute things on a remote server."""
+import django
+
 from django.conf import settings
 
 from fabric.api import cd, env, local, run
@@ -285,7 +287,10 @@ def run_syncdb():
 
     """
     with cd(settings.FAB_SETTING('SERVER_PROJECT_ROOT')):
-        run_workon('python2.7 manage.py syncdb --migrate --noinput')
+        if django.get_version() < 1.7:
+            run_workon('python2.7 manage.py syncdb --migrate --noinput')
+        else:
+            local('python2.7 manage.py migrate')
 
 
 @require_server
