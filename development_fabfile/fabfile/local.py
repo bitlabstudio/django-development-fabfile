@@ -1,4 +1,5 @@
 """Fabfile for tasks that only manipulate things on the local machine."""
+import django
 import os
 import re
 
@@ -286,8 +287,11 @@ def rebuild():
     """
     drop_db()
     create_db()
-    local('python2.7 manage.py syncdb --all --noinput')
-    local('python2.7 manage.py migrate --fake')
+    if django.get_version() < 1.7:
+        local('python2.7 manage.py syncdb --all --noinput')
+        local('python2.7 manage.py migrate --fake')
+    else:
+        local('python2.7 manage.py migrate')
 
 
 def reset_passwords():
