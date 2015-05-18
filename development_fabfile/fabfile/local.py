@@ -7,7 +7,7 @@ from django.conf import settings
 
 from fabric.api import hide, lcd, local
 from fabric.api import settings as fab_settings
-from fabric.colors import green, red
+from fabric.colors import green, red, yellow
 from fabric.utils import abort, warn, puts
 from fabric.state import env
 
@@ -41,12 +41,15 @@ def check_coverage():
         total_line = local('grep -n Total index.html', capture=True)
         match = re.search(r'^(\d+):', total_line)
         total_line_number = int(match.groups()[0])
-        percentage_line_number = total_line_number + 4
+        percentage_line_number = total_line_number + 5
         percentage_line = local(
             'awk NR=={0} index.html'.format(percentage_line_number),
             capture=True)
-        match = re.search(r'<td>(\d.+)%</td>', percentage_line)
-        percentage = float(match.groups()[0])
+        match = re.search(r'(\d.+)%', percentage_line)
+        try:
+            percentage = float(match.groups()[0])
+        except AttributeError:
+            abort(yellow('Coverage could not be determined.'))
     if percentage < 100:
         abort(red('Coverage is {0}%'.format(percentage)))
     print(green('Coverage is {0}%'.format(percentage)))
@@ -314,8 +317,9 @@ def test(options=None, integration=1, selenium=1, test_settings=None):
     """
     if test_settings is None:
         test_settings = settings.TEST_SETTINGS_PATH
-    command = ("./manage.py test -v 2 --traceback --failfast" +
-               " --settings={0} --pattern='*_tests.py'".format(test_settings))
+    command = ("coverage run --source='.' manage.py test -v 2 --traceback" +
+               " --failfast --settings={0} --pattern='*_tests.py'".format(
+                   test_settings))
     if int(integration) == 0:
         command += " --exclude='integration_tests'"
     if int(selenium) == 0:
@@ -324,3 +328,6 @@ def test(options=None, integration=1, selenium=1, test_settings=None):
         command += ' {0}'.format(options)
     with fab_settings(warn_only=True):
         local(command, capture=False)
+    local('coverage html -d {} --omit="{}"'.format(
+        settings.COVERAGE_REPORT_HTML_OUTPUT_DIR,
+        settings.COVERAGE_MODULE_EXCLUDES))
