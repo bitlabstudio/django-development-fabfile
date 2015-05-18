@@ -323,8 +323,4 @@ def test(options=None, integration=1, selenium=1, test_settings=None):
     if options:
         command += ' {0}'.format(options)
     with fab_settings(warn_only=True):
-        result = local(command, capture=False)
-    if result.failed:
-        abort(red('Some tests failed'))
-    else:
-        print green('All tests passed')
+        local(command, capture=False)
