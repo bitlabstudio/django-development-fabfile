@@ -328,4 +328,5 @@ def test(options=None, integration=1, selenium=1, test_settings=None):
         command += ' {0}'.format(options)
     with fab_settings(warn_only=True):
         local(command, capture=False)
-    local('coverage html -d {} --omit="{}"'.format(settings.COVERAGE_EXCLUDES))
+    local('coverage html -d coverage --omit="{}"'.format(
+        settings.COVERAGE_EXCLUDES))
