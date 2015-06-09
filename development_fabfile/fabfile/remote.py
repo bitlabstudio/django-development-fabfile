@@ -290,7 +290,7 @@ def run_syncdb():
         if django.get_version() < 1.7:
             run_workon('python2.7 manage.py syncdb --migrate --noinput')
         else:
-            local('python2.7 manage.py migrate')
+            run_workon('python2.7 manage.py migrate')
 
 
 @require_server
