@@ -5,7 +5,7 @@ from django.conf import settings
 
 from fabric.api import cd, env, local, run
 
-from .local import drop_db, create_db, import_db, reset_passwords
+from .local import drop_db, create_db, import_db, import_media, reset_passwords
 from .utils import require_server, run_workon
 
 
@@ -164,7 +164,7 @@ def run_git_pull():
 @require_server
 def import_remote_db():
     """
-    Downloads the prod db and imports it locally.
+    Downloads a db and imports it locally.
 
     """
     run_export_db()
@@ -173,6 +173,17 @@ def import_remote_db():
     create_db()
     import_db()
     reset_passwords()
+    
+    
+@require_server
+def import_remote_media():
+    """
+    Downloads media and imports it locally.
+
+    """
+    run_export_media()
+    run_download_media()
+    import_media()
 
 
 @require_server
