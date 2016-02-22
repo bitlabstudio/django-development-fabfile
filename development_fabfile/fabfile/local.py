@@ -48,8 +48,10 @@ def check_coverage():
         match = re.search(r'(\d.+)%', percentage_line)
         try:
             percentage = float(match.groups()[0])
-        except AttributeError:
-            abort(yellow('Coverage could not be determined.'))
+        except ValueError:
+            # If there's no dotting try another search
+            match = re.search(r'(\d+)%', percentage_line)
+            percentage = float(match.groups()[0])
     if percentage < 100:
         abort(red('Coverage is {0}%'.format(percentage)))
     print(green('Coverage is {0}%'.format(percentage)))
