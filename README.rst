@@ -48,3 +48,9 @@ Then create a ``fabfile_settings.py`` next to your ``settings.py`` and add
 all necessary settings. As a starting point you can copy the
 ``fabfile_settings.py.sample`` of this project and change all values to your
 project.
+
+Python 3
+++++++++
+
+Please note, that fabric isn't working with Python 3. Please use ``fabric3``
+instead.

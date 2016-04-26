@@ -1,6 +1,6 @@
 import os
 from setuptools import setup, find_packages
-import development_fabfile
+import development_fabfile as app
 
 
 def read(fname):
@@ -12,19 +12,20 @@ def read(fname):
 
 setup(
     name="django-development-fabfile",
-    version=development_fabfile.__version__,
+    version=app.__version__,
     description=read('DESCRIPTION'),
     long_description=read('README.rst'),
     license='The MIT License',
     platforms=['OS Independent'],
     keywords='django, fabric, development, environemnt, deployment',
     author='Martin Brochhaus',
-    author_email='mbrochh@gmail.com',
+    author_email='martin.brochhaus@bitmazk.com',
     url="https://github.com/bitmazk/django-development-fabfile",
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'Fabric',
+        'Django',
+        'fabric3',
         'flake8_snippets'
     ],
 )

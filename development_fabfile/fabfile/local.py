@@ -7,7 +7,7 @@ from django.conf import settings
 
 from fabric.api import hide, lcd, local
 from fabric.api import settings as fab_settings
-from fabric.colors import green, red, yellow
+from fabric.colors import green, red
 from fabric.utils import abort, warn, puts
 from fabric.state import env
 
@@ -207,8 +207,7 @@ def syntax_check():
 def flake8():
     """Runs flake8 against the codebase."""
     return local('flake8 --ignore=E126 --statistics '
-                 '--exclude=submodules,migrations,node_modules '
-                 '--snippets="import ipdb,ipdb.set_trace()" .')
+                 '--exclude=submodules,migrations,node_modules .')
 
 
 def import_db(filename=None):

@@ -173,8 +173,8 @@ def import_remote_db():
     create_db()
     import_db()
     reset_passwords()
-    
-    
+
+
 @require_server
 def import_remote_media():
     """

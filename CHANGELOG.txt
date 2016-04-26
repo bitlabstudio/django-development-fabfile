@@ -1,5 +1,8 @@
 === ongoing (2.14.X)  ===
 
+- Prepared app for Python3.5
+- Added some Django tests
+- Replaced Fabric in favour of fabric3
 - Make use of coverage
 - Migrated to Django>=1.7
 
