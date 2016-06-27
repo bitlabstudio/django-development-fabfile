@@ -5,6 +5,7 @@
 - Replaced Fabric in favour of fabric3
 - Make use of coverage
 - Migrated to Django>=1.7
+- Prepared app for the use of different Python versions
 
 === 2.13 ==
 

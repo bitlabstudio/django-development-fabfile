@@ -1,6 +1,7 @@
 """Fab tasks that execute things on a remote server."""
-import django
+import sys
 
+import django
 from django.conf import settings
 
 from distutils.version import StrictVersion
@@ -8,6 +9,9 @@ from fabric.api import cd, env, local, run
 
 from .local import drop_db, create_db, import_db, import_media, reset_passwords
 from .utils import require_server, run_workon
+
+
+PYTHON_VERSION = '{}.{}'.format(sys.version_info.major, sys.version_info.minor)
 
 
 @require_server
@@ -21,7 +25,8 @@ def run_collectstatic():
 
     """
     with cd(settings.FAB_SETTING('SERVER_PROJECT_ROOT')):
-        run_workon('python2.7 manage.py collectstatic --noinput')
+        run_workon('python{} manage.py collectstatic --noinput'.format(
+            PYTHON_VERSION))
 
 
 @require_server
@@ -36,7 +41,7 @@ def run_compilemessages():
     """
 
     with cd(settings.FAB_SETTING('SERVER_PROJECT_ROOT')):
-        run_workon('python2.7 manage.py compilemessages')
+        run_workon('python{} manage.py compilemessages'.format(PYTHON_VERSION))
 
 
 @require_server
@@ -198,7 +203,8 @@ def run_makemessages():
 
     """
     with cd(settings.FAB_SETTING('SERVER_PROJECT_ROOT')):
-        run_workon('python2.7 manage.py makemessages -s --all')
+        run_workon('python{} manage.py makemessages -s --all'.format(
+            PYTHON_VERSION))
 
 
 @require_server
@@ -300,9 +306,10 @@ def run_syncdb():
     """
     with cd(settings.FAB_SETTING('SERVER_PROJECT_ROOT')):
         if StrictVersion(django.get_version()) < StrictVersion('1.7'):
-            run_workon('python2.7 manage.py syncdb --migrate --noinput')
+            run_workon('python{} manage.py syncdb --migrate --noinput'.format(
+                PYTHON_VERSION))
         else:
-            run_workon('python2.7 manage.py migrate')
+            run_workon('python{} manage.py migrate'.format(PYTHON_VERSION))
 
 
 @require_server

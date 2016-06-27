@@ -2,9 +2,11 @@
 import django
 import os
 import re
+import sys
 
 from django.conf import settings
 
+from distutils.version import StrictVersion
 from fabric.api import hide, lcd, local
 from fabric.api import settings as fab_settings
 from fabric.colors import green, red
@@ -24,6 +26,8 @@ if getattr(settings, 'LOCAL_PG_USE_LOCALHOST', True):
 
 
 DB_PASSWORD = settings.DATABASES['default']['PASSWORD']
+
+PYTHON_VERSION = '{}.{}'.format(sys.version_info.major, sys.version_info.minor)
 
 
 def check():
@@ -291,16 +295,18 @@ def rebuild():
     """
     drop_db()
     create_db()
-    if django.get_version() < 1.7:
-        local('python2.7 manage.py syncdb --all --noinput')
-        local('python2.7 manage.py migrate --fake')
+    if StrictVersion(django.get_version()) < StrictVersion('1.7'):
+        local('python{} manage.py syncdb --all --noinput'.format(
+            PYTHON_VERSION))
+        local('python{} manage.py migrate --fake'.format(PYTHON_VERSION))
     else:
-        local('python2.7 manage.py migrate')
+        local('python{} manage.py migrate'.format(PYTHON_VERSION))
 
 
 def reset_passwords():
     """Resets all passwords to `test123`."""
-    local('python2.7 manage.py set_fake_passwords --password=test123')
+    local('python{} manage.py set_fake_passwords --password=test123'.format(
+        PYTHON_VERSION))
 
 
 def test(options=None, integration=1, selenium=1, test_settings=None):
