@@ -3,6 +3,7 @@ import django
 
 from django.conf import settings
 
+from distutils.version import StrictVersion
 from fabric.api import cd, env, local, run
 
 from .local import drop_db, create_db, import_db, import_media, reset_passwords
@@ -298,7 +299,7 @@ def run_syncdb():
 
     """
     with cd(settings.FAB_SETTING('SERVER_PROJECT_ROOT')):
-        if django.get_version() < 1.7:
+        if StrictVersion(django.get_version()) < StrictVersion('1.7'):
             run_workon('python2.7 manage.py syncdb --migrate --noinput')
         else:
             run_workon('python2.7 manage.py migrate')
