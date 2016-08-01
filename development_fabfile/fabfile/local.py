@@ -211,7 +211,8 @@ def syntax_check():
 def flake8():
     """Runs flake8 against the codebase."""
     return local('flake8 --ignore=E126 --statistics '
-                 '--exclude=submodules,migrations,node_modules .')
+                 '--exclude=submodules,south_migrations,migrations,'
+                 'node_modules .')
 
 
 def import_db(filename=None):
