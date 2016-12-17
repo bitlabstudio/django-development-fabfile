@@ -13,6 +13,9 @@ from .utils import require_server, run_workon
 
 PYTHON_VERSION = '{}.{}'.format(sys.version_info.major, sys.version_info.minor)
 
+if getattr(settings, 'PEM_KEY_DIR', False):
+    env.key_filename = settings.PEM_KEY_DIR
+
 
 @require_server
 def run_collectstatic():
