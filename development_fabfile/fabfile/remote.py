@@ -92,9 +92,12 @@ def run_download_db(filename=None):
     """
     if not filename:
         filename = settings.DB_DUMP_FILENAME
-    local('scp {0}@{1}:{2}{3} .'.format(
-        env.user, env.host_string,
-        settings.FAB_SETTING('SERVER_DB_BACKUP_DIR'), filename))
+    if env.key_filename:
+        ssh = settings.PROJECT_NAME
+    else:
+        ssh = '{0}@{1}'.format(env.user, env.host_string)
+    local('scp {0}:{1}{2} .'.format(
+        ssh, settings.FAB_SETTING('SERVER_DB_BACKUP_DIR'), filename))
 
 
 @require_server
@@ -112,10 +115,12 @@ def run_download_media(filename=None):
     """
     if not filename:
         filename = settings.MEDIA_DUMP_FILENAME
-
-    local('scp {0}@{1}:{2}{3} .'.format(
-        env.user, env.host_string,
-        settings.FAB_SETTING('SERVER_MEDIA_BACKUP_DIR'), filename))
+    if env.key_filename:
+        ssh = settings.PROJECT_NAME
+    else:
+        ssh = '{0}@{1}'.format(env.user, env.host_string)
+    local('scp {0}:{1}{2} .'.format(
+        ssh, settings.FAB_SETTING('SERVER_MEDIA_BACKUP_DIR'), filename))
 
 
 @require_server
@@ -346,6 +351,9 @@ def run_upload_db(filename=None):
     """
     if not filename:
         filename = settings.DB_DUMP_FILENAME
-    local('scp {0} {1}@{2}:{3}'.format(
-        filename, env.user, env.host_string,
-        settings.FAB_SETTING('SERVER_DB_BACKUP_DIR')))
+    if env.key_filename:
+        ssh = settings.PROJECT_NAME
+    else:
+        ssh = '{0}@{1}'.format(env.user, env.host_string)
+    local('scp {0} {1}:{3}'.format(
+        filename, ssh, settings.FAB_SETTING('SERVER_DB_BACKUP_DIR')))

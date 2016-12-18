@@ -1,5 +1,6 @@
 === ongoing (2.14.X)  ===
 
+- Improved remote scripts to enable ssh aliases
 - Added option to use a .pem file
 - Prepared app for Python3.5
 - Added some Django tests
