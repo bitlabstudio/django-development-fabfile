@@ -14,7 +14,7 @@ if __name__ == '__main__':
     local('flake8 --ignore=E126 --ignore=W391 --statistics'
           ' --exclude=submodules,build .')
     local('coverage run --source="development_fabfile" manage.py test -v 2'
-          ' --traceback --failfast'
+          ' --failfast'
           ' --settings=development_fabfile.tests.settings'
           ' --pattern="*_tests.py"')
     local('coverage html -d coverage --omit="*__init__*,*/settings/*,'

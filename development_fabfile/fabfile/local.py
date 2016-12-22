@@ -325,7 +325,7 @@ def test(options=None, integration=1, selenium=1, test_settings=None):
     """
     if test_settings is None:
         test_settings = settings.TEST_SETTINGS_PATH
-    command = ("coverage run --source='.' manage.py test -v 2 --traceback" +
+    command = ("coverage run --source='.' manage.py test -v 2" +
                " --failfast --settings={0} --pattern='*_tests.py'".format(
                    test_settings))
     if int(integration) == 0:
