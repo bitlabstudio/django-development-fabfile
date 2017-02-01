@@ -120,7 +120,7 @@ def export_db(filename=None, remote=False):
         backup_dir = ''
         host_arg = HOST
 
-    local('pg_dump -c -Fc -O -h localhost -U {0}{1} {2} -f {3}{4}'.format(
+    local('pg_dump -c -Fc -O -U {0}{1} {2} -f {3}{4}'.format(
         env.db_role, host_arg, env.db_name, backup_dir, filename))
 
 

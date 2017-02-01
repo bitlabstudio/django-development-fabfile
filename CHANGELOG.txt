@@ -1,5 +1,6 @@
 === ongoing (2.14.X)  ===
 
+- Removed host argument duplicate from export_db function
 - Remove traceback option from manage.py test command
 - Improved remote scripts to enable ssh aliases
 - Added option to use a .pem file
