@@ -16,14 +16,10 @@ from fabric.state import env
 from .servers import local_machine
 
 
-USER_AND_HOST = '-U {0}'.format(settings.LOCAL_PG_ADMIN_ROLE)
-if getattr(settings, 'LOCAL_PG_HOST'):
-    USER_AND_HOST += ' -h {}'.format(settings.LOCAL_PG_HOST)
-
-HOST = ''
-if getattr(settings, 'LOCAL_PG_HOST'):
-    HOST = ' -h {}'.format(settings.LOCAL_PG_HOST)
-
+HOST = ' -h localhost'
+if settings.DATABASES['default']['HOST']:
+    HOST = ' -h {}'.format(settings.DATABASES['default']['HOST'])
+USER_AND_HOST = '-U {0}{1}'.format(settings.LOCAL_PG_ADMIN_ROLE, HOST)
 
 DB_PASSWORD = settings.DATABASES['default']['PASSWORD']
 
