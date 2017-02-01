@@ -123,7 +123,7 @@ COVERAGE_EXCLUDES = (
 # This should be the superuser of your postgres installation. Usually this is
 # either postgres or your login username.
 LOCAL_PG_ADMIN_ROLE = 'postgres'
-LOCAL_PG_USE_LOCALHOST = True
+LOCAL_PG_HOST = 'localhost'
 LOCAL_COVERAGE_PATH = os.path.join(os.path.dirname(__file__), '../../coverage')
 
 # ============================================================================

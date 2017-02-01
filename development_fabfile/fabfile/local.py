@@ -17,12 +17,12 @@ from .servers import local_machine
 
 
 USER_AND_HOST = '-U {0}'.format(settings.LOCAL_PG_ADMIN_ROLE)
-if getattr(settings, 'LOCAL_PG_USE_LOCALHOST', True):
-    USER_AND_HOST += ' -h localhost'
+if getattr(settings, 'LOCAL_PG_HOST'):
+    USER_AND_HOST += ' -h {}'.format(settings.LOCAL_PG_HOST)
 
 HOST = ''
-if getattr(settings, 'LOCAL_PG_USE_LOCALHOST', True):
-    HOST = ' -h localhost'
+if getattr(settings, 'LOCAL_PG_HOST'):
+    HOST = ' -h {}'.format(settings.LOCAL_PG_HOST)
 
 
 DB_PASSWORD = settings.DATABASES['default']['PASSWORD']

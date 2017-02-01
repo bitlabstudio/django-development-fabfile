@@ -10,6 +10,7 @@
 - Make use of coverage
 - Migrated to Django>=1.7
 - Prepared app for the use of different Python versions
+- Replaced LOCAL_PG_USE_LOCALHOST setting with LOCAL_PG_HOST
 
 === 2.13 ==
 
