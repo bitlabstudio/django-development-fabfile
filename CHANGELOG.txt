@@ -11,6 +11,7 @@
 - Migrated to Django>=1.7
 - Prepared app for the use of different Python versions
 - Replaced LOCAL_PG_USE_LOCALHOST with dynamic host taken from DATABASES
+- export_db now uses the host taken from DATABASES
 
 === 2.13 ==
 

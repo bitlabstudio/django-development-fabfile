@@ -111,13 +111,11 @@ def export_db(filename=None, remote=False):
         filename = settings.DB_DUMP_FILENAME
     if remote:
         backup_dir = settings.FAB_SETTING('SERVER_DB_BACKUP_DIR')
-        host_arg = ''
     else:
         backup_dir = ''
-        host_arg = HOST
 
     local('pg_dump -c -Fc -O -U {0}{1} {2} -f {3}{4}'.format(
-        env.db_role, host_arg, env.db_name, backup_dir, filename))
+        env.db_role, HOST, env.db_name, backup_dir, filename))
 
 
 def drop_db():
