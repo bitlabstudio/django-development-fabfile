@@ -300,7 +300,7 @@ def rebuild():
 
 def reset_passwords():
     """Resets all passwords to `test123`."""
-    local('python{} manage.py set_fake_passwords --password=test123'.format(
+    local('python{} manage.py set_fake_passwords --password=test1234'.format(
         PYTHON_VERSION))
 
 
