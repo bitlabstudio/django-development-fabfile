@@ -1,5 +1,6 @@
 === ongoing (2.14.X)  ===
 
+- Added setting to set a specific Python version
 - Removed host argument duplicate from export_db function
 - Remove traceback option from manage.py test command
 - Improved remote scripts to enable ssh aliases

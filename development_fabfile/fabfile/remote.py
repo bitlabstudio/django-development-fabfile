@@ -11,7 +11,11 @@ from .local import drop_db, create_db, import_db, import_media, reset_passwords
 from .utils import require_server, run_workon
 
 
-PYTHON_VERSION = '{}.{}'.format(sys.version_info.major, sys.version_info.minor)
+if settings.PYTHON_VERSION:
+    PYTHON_VERSION = settings.PYTHON_VERSION
+else:
+    PYTHON_VERSION = '{}.{}'.format(
+        sys.version_info.major, sys.version_info.minor)
 
 if getattr(settings, 'PEM_KEY_DIR', False):
     env.key_filename = settings.PEM_KEY_DIR

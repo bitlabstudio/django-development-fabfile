@@ -23,7 +23,11 @@ USER_AND_HOST = '-U {0}{1}'.format(settings.LOCAL_PG_ADMIN_ROLE, HOST)
 
 DB_PASSWORD = settings.DATABASES['default']['PASSWORD']
 
-PYTHON_VERSION = '{}.{}'.format(sys.version_info.major, sys.version_info.minor)
+if settings.PYTHON_VERSION:
+    PYTHON_VERSION = settings.PYTHON_VERSION
+else:
+    PYTHON_VERSION = '{}.{}'.format(
+        sys.version_info.major, sys.version_info.minor)
 
 
 def check():
