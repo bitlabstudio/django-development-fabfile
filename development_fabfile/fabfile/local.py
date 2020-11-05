@@ -45,7 +45,7 @@ def check_coverage():
         total_line = local('grep -n Total index.html', capture=True)
         match = re.search(r'^(\d+):', total_line)
         total_line_number = int(match.groups()[0])
-        percentage_line_number = total_line_number + 5
+        percentage_line_number = total_line_number + 4
         percentage_line = local(
             'awk NR=={0} index.html'.format(percentage_line_number),
             capture=True)

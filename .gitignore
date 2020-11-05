@@ -5,3 +5,4 @@ coverage/
 *.egg-info/
 *.pyc
 dist/
+.idea/
